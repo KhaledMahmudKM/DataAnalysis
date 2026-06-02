@@ -1,7 +1,7 @@
 # Concise Book on Data Analysis
 ## From Raw Data to Actionable Insights
 
-**Author:** Khaled Mahmud     
+**Author:** Khaled Mahmud and AI   
 **Version:** 1.0  
 **Year:** 2026
 
