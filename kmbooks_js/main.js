@@ -186,6 +186,50 @@ async function initializeBook() {
   await loadBookMeta();
   await generateTOC();
   loadMarkdown("chapters/home.md", -1);
+  initSidebarToggle();
+}
+
+// ── Mobile sidebar open/close ───────────────────────────────
+function initSidebarToggle() {
+  const toggle   = document.getElementById("sidebar-toggle");
+  const closeBtn = document.getElementById("sidebar-close");
+  const sidebar  = document.getElementById("sidebar");
+  const overlay  = document.getElementById("sidebar-overlay");
+
+  function openSidebar() {
+    sidebar.classList.add("is-open");
+    overlay.classList.add("is-visible");
+    toggle.classList.add("is-open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove("is-open");
+    overlay.classList.remove("is-visible");
+    toggle.classList.remove("is-open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  }
+
+  toggle.addEventListener("click", () => {
+    sidebar.classList.contains("is-open") ? closeSidebar() : openSidebar();
+  });
+
+  closeBtn.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+
+  // Close sidebar when a chapter link is tapped on mobile
+  sidebar.addEventListener("click", e => {
+    if (e.target.classList.contains("toc-link") && window.innerWidth <= 768) {
+      closeSidebar();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeSidebar();
+  });
 }
 
 initializeBook();
